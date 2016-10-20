@@ -210,7 +210,27 @@ local function unlock_group_tag(msg, data, target)
     save_data(_config.moderation.data, data)
     return reply_msg(msg.id,'<b> >>Tag has been unlocked </b> 🔓', ok_cb, false)
   end
+local group_tag_lock = data[tostring(target)]['settings']['edit']
+  if group_tag_lock == 'yes' then
+    return reply_msg(msg.id,'<b> >>edit is already locked </b> 🔒', ok_cb, false)
+  end
+    data[tostring(target)]['settings']['edit'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return reply_msg(msg.id,'<b> >>edit has been locked </b> 🔒', ok_cb, false)
+  end
 
+local function unlock_group_edit(msg, data, target)
+  if not is_momod(msg) then
+    return 
+  end
+  local group_edit_lock = data[tostring(target)]['settings']['edit']
+  if group_tag_lock == 'no' then
+  return reply_msg(msg.id,'<b> >>edit is not locked </b> 🔓', ok_cb, false)
+  end
+    data[tostring(target)]['settings']['edit'] = 'no'
+    save_data(_config.moderation.data, data)
+    return reply_msg(msg.id,'<b> >>edit has been unlocked </b> 🔓', ok_cb, false)
+  end
   
 local function lock_group_emoji(msg, data, target)
   if not is_momod(msg) then
