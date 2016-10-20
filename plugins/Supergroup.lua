@@ -210,27 +210,7 @@ local function unlock_group_tag(msg, data, target)
     save_data(_config.moderation.data, data)
     return reply_msg(msg.id,'<b> >>Tag has been unlocked </b> 🔓', ok_cb, false)
   end
-local group_tag_lock = data[tostring(target)]['settings']['edit']
-  if group_tag_lock == 'yes' then
-    return reply_msg(msg.id,'<b> >>edit is already locked </b> 🔒', ok_cb, false)
-  end
-    data[tostring(target)]['settings']['edit'] = 'yes'
-    save_data(_config.moderation.data, data)
-    return reply_msg(msg.id,'<b> >>edit has been locked </b> 🔒', ok_cb, false)
-  end
 
-local function unlock_group_edit(msg, data, target)
-  if not is_momod(msg) then
-    return 
-  end
-  local group_edit_lock = data[tostring(target)]['settings']['edit']
-  if group_tag_lock == 'no' then
-  return reply_msg(msg.id,'<b> >>edit is not locked </b> 🔓', ok_cb, false)
-  end
-    data[tostring(target)]['settings']['edit'] = 'no'
-    save_data(_config.moderation.data, data)
-    return reply_msg(msg.id,'<b> >>edit has been unlocked </b> 🔓', ok_cb, false)
-  end
   
 local function lock_group_emoji(msg, data, target)
   if not is_momod(msg) then
@@ -1628,7 +1608,7 @@ local function run(msg, matches)
 				return "<b>Create a link using /newlink first!</b>\n\n<b>Or if I am not creator use /setlink to set your link</b>"
 			end
 			savelog(msg.to.id, name_log.." ["..msg.from.id.."] requested group link ["..group_link.."]")
-            return reply_msg(msg.id,'➖➖➖➖➖➖➖➖➖➖➖➖➖➖\n<a href="'..group_link..'">🔘 برای ورود به گروه | '..msg.to.title..' | کلیک کنید 🔘</a>\n➖➖➖➖➖➖➖➖➖➖➖➖➖➖', ok_cb, false)
+            return reply_msg(msg.id,'➖➖➖➖➖➖➖➖➖➖➖➖➖➖\n<a href="'..group_link..'">🔘 برای ورود به گروه | '..msg.to.title..' | کلیک کنید 🔘</a>\n➖➖➖➖➖➖➖➖➖➖➖➖➖➖..group_link..', ok_cb, false)
 		end
 
 		if matches[1] == "invite" and is_sudo(msg) then
@@ -2475,4 +2455,4 @@ return {
   pre_process = pre_process
 }
 --End supergrpup.lua
---By @Tele_sudo
+
